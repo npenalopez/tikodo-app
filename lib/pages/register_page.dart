@@ -83,7 +83,7 @@ class _RegisterPageState extends State<RegisterPage> {
             TextSpan(
                 text: 'Sign in',
                 style: TextStyle(
-                    color: HexColor("#B5140E"), fontWeight: FontWeight.bold),
+                    color: HexColor("#CB4E45"), fontWeight: FontWeight.bold),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.pushNamed(context, "/");
@@ -131,7 +131,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide:
-                      BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                      BorderSide(color: HexColor("#CB4E45"), width: 2.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -173,7 +173,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide:
-                      BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                      BorderSide(color: HexColor("#CB4E45"), width: 2.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -219,7 +219,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide:
-                      BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                      BorderSide(color: HexColor("#CB4E45"), width: 2.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -256,7 +256,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         hidePassword = !hidePassword;
                       });
                     },
-                    color: HexColor("#B5140E").withOpacity(0.6),
+                    color: HexColor("#CB4E45").withOpacity(0.6),
                     icon: Icon(
                         hidePassword ? Icons.visibility_off : Icons.visibility),
                   ),
@@ -269,7 +269,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     borderSide:
-                        BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                        BorderSide(color: HexColor("#CB4E45"), width: 2.0),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -310,7 +310,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         hidePassword2 = !hidePassword2;
                       });
                     },
-                    color: HexColor("#B5140E").withOpacity(0.6),
+                    color: HexColor("#CB4E45").withOpacity(0.6),
                     icon: Icon(hidePassword2
                         ? Icons.visibility_off
                         : Icons.visibility),
@@ -324,7 +324,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   focusedBorder: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                     borderSide:
-                        BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                        BorderSide(color: HexColor("#CB4E45"), width: 2.0),
                   ),
                   enabledBorder: OutlineInputBorder(
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -345,7 +345,7 @@ class _RegisterPageState extends State<RegisterPage> {
               child: TextButton(
                 style: ButtonStyle(
                     backgroundColor:
-                        MaterialStateProperty.all<Color>(HexColor("#B5140E"))),
+                        MaterialStateProperty.all<Color>(HexColor("#CB4E45"))),
                 onPressed: () {
                   if (registerFormKey.currentState!.validate()) {
                     final progress = ProgressHUD.of(context);

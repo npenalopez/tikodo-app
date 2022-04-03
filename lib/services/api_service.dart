@@ -112,7 +112,7 @@ class APIService {
   }
 
   /// A method that updates a todo.
-  static Future<String> updateTodo(Todo todo) async {
+  static Future<String> updateTodo(Todo todo, String description) async {
     if (await verifyToken() == false) {
       refreshToken();
     }
@@ -128,8 +128,8 @@ class APIService {
     var response = await client.put(url,
         headers: requestHeaders,
         body: jsonEncode(<String, dynamic>{
-          'description': todo.description,
-          'done': !todo.done,
+          'description': description == "" ? todo.description : description,
+          'done': description == "" ? !todo.done : todo.done,
         }));
 
     return response.reasonPhrase.toString();

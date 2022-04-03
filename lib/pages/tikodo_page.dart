@@ -15,25 +15,15 @@ class TikoDoPage extends StatefulWidget {
 class _TikoDoPageState extends State<TikoDoPage> {
   List<Todo> todos = <Todo>[];
   GlobalKey<FormState> addTodoForm = GlobalKey<FormState>();
+  GlobalKey<FormState> editTodoForm = GlobalKey<FormState>();
   final TextEditingController todoDescriptionController =
       TextEditingController();
+  final TextEditingController todoEditController = TextEditingController();
 
   /// This method is called when the user removes a todo.
-  void onDismissedTodo(int index) {
+  void onDeletedTodo(int index) {
     setState(() {
       todos.removeWhere((todo) => todo.id == index);
-    });
-  }
-
-  /// This method is called when the user updates the status of a todo.
-  void onUpdatedTodo(Todo todo) {
-    var updatedTodo = {
-      'id': todo.id,
-      'description': todo.description,
-      'done': !todo.done
-    };
-    setState(() {
-      todos[todo.id] = updatedTodo as Todo;
     });
   }
 
@@ -69,7 +59,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
             semanticLabel: "Logout",
             Icons.logout_rounded,
             size: 25,
-            color: HexColor("#B5140E"),
+            color: HexColor("#CB4E45"),
           )),
     );
   }
@@ -83,7 +73,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
               return _addTodoPopup(context);
             });
       },
-      backgroundColor: HexColor("#B5140E"),
+      backgroundColor: HexColor("#CB4E45"),
       tooltip: 'Add a todo',
       child: Icon(
         Icons.add,
@@ -131,7 +121,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
                       style: TextStyle(
                         fontSize: 30,
                         fontWeight: FontWeight.bold,
-                        color: HexColor("#B5140E"),
+                        color: HexColor("#CB4E45"),
                       ),
                     ),
                   ),
@@ -195,7 +185,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
       decoration: BoxDecoration(
         border: Border(
             left: BorderSide(
-          color: HexColor("#B5140E"),
+          color: HexColor("#CB4E45"),
           width: 4,
         )),
       ),
@@ -217,7 +207,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
                     "Delete task",
                     style: TextStyle(
                       fontSize: 20,
-                      color: HexColor("#B5140E"),
+                      color: HexColor("#CB4E45"),
                     ),
                   ),
                   children: [
@@ -257,7 +247,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
                             style: ButtonStyle(
                                 backgroundColor:
                                     MaterialStateProperty.all<Color>(
-                                        HexColor("#B5140E"))),
+                                        HexColor("#CB4E45"))),
                             onPressed: () {
                               Navigator.pop(context, true);
                             },
@@ -271,13 +261,148 @@ class _TikoDoPageState extends State<TikoDoPage> {
                     ),
                   ]),
             );
+          } else {
+            todoEditController.text = todo.description;
+            return await showDialog(
+              context: context,
+              builder: (context) => SimpleDialog(
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 25,
+                    vertical: 20,
+                  ),
+                  backgroundColor: HexColor("#FEFEFE"),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10)),
+                  title: Text(
+                    "Edit task",
+                    style: TextStyle(
+                      fontSize: 20,
+                      color: HexColor("#CB4E45"),
+                    ),
+                  ),
+                  children: [
+                    Form(
+                      key: editTodoForm,
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Please enter some text';
+                          }
+                          if (value.length >= 30) {
+                            return 'Text must be shorter than 30 characters';
+                          }
+                          return null;
+                        },
+                        controller: todoEditController,
+                        autofocus: true,
+                        style: TextStyle(
+                          fontSize: 18,
+                          height: 1,
+                          color: HexColor("#3B3836"),
+                        ),
+                        decoration: InputDecoration(
+                          fillColor: HexColor("#f3f3f4"),
+                          filled: true,
+                          hintText: "eg. Buy milk",
+                          hintStyle: TextStyle(
+                            color: HexColor("#8c92ac"),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                                color: HexColor("#CB4E45"), width: 2.0),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius:
+                                const BorderRadius.all(Radius.circular(10)),
+                            borderSide: BorderSide(
+                                color: HexColor("#f3f3f4"), width: 2.0),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 3.5,
+                          height: 50,
+                          child: TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        HexColor("#C06A5E"))),
+                            onPressed: () {
+                              Navigator.pop(context, false);
+                            },
+                            child: Text(
+                              "Cancel",
+                              style: TextStyle(color: HexColor("#FEFEFE")),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width / 3.5,
+                          height: 50,
+                          child: TextButton(
+                            style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        HexColor("#CB4E45"))),
+                            onPressed: () async {
+                              var navigator = Navigator.pop(context, false);
+                              await APIService.updateTodo(
+                                  todo, todoEditController.text);
+                              setState(() {});
+                              navigator;
+                            },
+                            child: Text(
+                              "Edit",
+                              style: TextStyle(color: HexColor("#FEFEFE")),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ]),
+            );
           }
-          return false;
         },
         background: Container(
+          padding: const EdgeInsets.only(left: 10),
+          alignment: Alignment.centerRight,
+          color: HexColor("#429BB8"),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.edit,
+                color: HexColor("#FEFEFE"),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Edit task",
+                style: TextStyle(
+                  color: HexColor("#FEFEFE"),
+                  fontSize: 18,
+                ),
+              )
+            ],
+          ),
+        ),
+        secondaryBackground: Container(
           padding: const EdgeInsets.only(right: 10),
           alignment: Alignment.centerRight,
-          color: HexColor("#B5140E"),
+          color: HexColor("#CB4E45"),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -300,13 +425,13 @@ class _TikoDoPageState extends State<TikoDoPage> {
         ),
         onDismissed: (direction) async {
           await APIService.deleteTodo(todo.id);
-          onDismissedTodo(todo.id);
+          onDeletedTodo(todo.id);
         },
         child: ListTile(
           hoverColor: HexColor("#FEFEFE"),
           tileColor: HexColor("#FEFEFE"),
           onTap: () async {
-            await APIService.updateTodo(todo);
+            await APIService.updateTodo(todo, "");
             setState(() {});
           },
           leading: SizedBox(
@@ -351,7 +476,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
             "Add task",
             style: TextStyle(
               fontSize: 20,
-              color: HexColor("#B5140E"),
+              color: HexColor("#CB4E45"),
             ),
           ),
           const Divider(),
@@ -360,7 +485,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
             onPressed: () => Navigator.pop(context),
             icon: Icon(
               Icons.cancel,
-              color: HexColor("#B5140E"),
+              color: HexColor("#CB4E45"),
               size: 28,
             ),
           ),
@@ -395,7 +520,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
               ),
               focusedBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                borderSide: BorderSide(color: HexColor("#CB4E45"), width: 2.0),
               ),
               enabledBorder: OutlineInputBorder(
                 borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -413,7 +538,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
           child: TextButton(
             style: ButtonStyle(
                 backgroundColor:
-                    MaterialStateProperty.all<Color>(HexColor("#B5140E"))),
+                    MaterialStateProperty.all<Color>(HexColor("#CB4E45"))),
             onPressed: () async {
               if (addTodoForm.currentState!.validate()) {
                 var navigator = Navigator.pop(context);

@@ -26,7 +26,7 @@ class _LoginPageState extends State<LoginPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor("#FEFEFE"),
       body: ProgressHUD(
-        indicatorColor: HexColor("#B5140E"),
+        indicatorColor: HexColor("#CB4E45"),
         backgroundColor: HexColor("#FEFEFE"),
         child: Builder(
           builder: (context) => loginUI(context),
@@ -138,7 +138,7 @@ class _LoginPageState extends State<LoginPage> {
                 focusedBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
                   borderSide:
-                      BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                      BorderSide(color: HexColor("#CB4E45"), width: 2.0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: const BorderRadius.all(Radius.circular(10)),
@@ -175,7 +175,7 @@ class _LoginPageState extends State<LoginPage> {
                         hidePassword = !hidePassword;
                       });
                     },
-                    color: HexColor("#B5140E").withOpacity(0.6),
+                    color: HexColor("#CB4E45").withOpacity(0.6),
                     icon: Icon(
                         hidePassword ? Icons.visibility_off : Icons.visibility),
                   ),
@@ -190,7 +190,7 @@ class _LoginPageState extends State<LoginPage> {
                       Radius.circular(10),
                     ),
                     borderSide: BorderSide(
-                      color: HexColor("#B5140E"),
+                      color: HexColor("#CB4E45"),
                       width: 2.0,
                     ),
                   ),
@@ -217,7 +217,7 @@ class _LoginPageState extends State<LoginPage> {
               child: TextButton(
                 style: ButtonStyle(
                   backgroundColor:
-                      MaterialStateProperty.all<Color>(HexColor("#B5140E")),
+                      MaterialStateProperty.all<Color>(HexColor("#CB4E45")),
                 ),
                 onPressed: () {
                   if (loginFormKey.currentState!.validate()) {
@@ -287,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
             TextSpan(
                 text: 'Register now',
                 style: TextStyle(
-                    color: HexColor("#B5140E"), fontWeight: FontWeight.bold),
+                    color: HexColor("#CB4E45"), fontWeight: FontWeight.bold),
                 recognizer: TapGestureRecognizer()
                   ..onTap = () {
                     Navigator.pushNamed(context, "/register");
