@@ -278,12 +278,24 @@ class _TikoDoPageState extends State<TikoDoPage> {
           padding: const EdgeInsets.only(right: 10),
           alignment: Alignment.centerRight,
           color: HexColor("#B5140E"),
-          child: Text(
-            "DELETE",
-            style: TextStyle(
-              color: HexColor("#FEFEFE"),
-              fontSize: 18,
-            ),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Icon(
+                Icons.delete,
+                color: HexColor("#FEFEFE"),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Text(
+                "Delete task",
+                style: TextStyle(
+                  color: HexColor("#FEFEFE"),
+                  fontSize: 18,
+                ),
+              )
+            ],
           ),
         ),
         onDismissed: (direction) async {
