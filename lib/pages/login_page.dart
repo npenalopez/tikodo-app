@@ -29,10 +29,7 @@ class _LoginPageState extends State<LoginPage> {
         indicatorColor: HexColor("#B5140E"),
         backgroundColor: HexColor("#FEFEFE"),
         child: Builder(
-          builder: (context) => Form(
-            key: loginFormKey,
-            child: loginUI(context),
-          ),
+          builder: (context) => loginUI(context),
         ),
       ),
     );
@@ -44,44 +41,64 @@ class _LoginPageState extends State<LoginPage> {
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              bottom: 10,
-              top: 60,
-            ),
-            child: Align(
-              alignment: Alignment.center,
-              child: KeyboardVisibilityBuilder(
-                builder: (context, isKeyboardVisible) {
-                  if (!isKeyboardVisible) {
-                    return Image.asset(
-                      "assets/images/LoginImage.png",
-                      width: 280,
-                      scale: 1,
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              bottom: 30,
-              top: 30,
-            ),
-            child: Text(
-              "Sign in to tikoDo",
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-                color: HexColor("#3B3836"),
-              ),
-            ),
-          ),
+          _loginImage(),
+          _welcomeMessage(),
+          _loginForm(),
+          _registerLink(),
+        ],
+      ),
+    );
+  }
+
+  Widget _loginImage() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        bottom: 10,
+        top: 60,
+      ),
+      child: Align(
+        alignment: Alignment.center,
+        child: KeyboardVisibilityBuilder(
+          builder: (context, isKeyboardVisible) {
+            if (!isKeyboardVisible) {
+              return Image.asset(
+                "assets/images/LoginImage.png",
+                width: 280,
+                scale: 1,
+              );
+            } else {
+              return Container();
+            }
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget _welcomeMessage() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 20,
+        bottom: 30,
+        top: 30,
+      ),
+      child: Text(
+        "Sign in to tikoDo",
+        style: TextStyle(
+          fontWeight: FontWeight.bold,
+          fontSize: 25,
+          color: HexColor("#3B3836"),
+        ),
+      ),
+    );
+  }
+
+  Widget _loginForm() {
+    return Form(
+      key: loginFormKey,
+      child: Column(
+        children: [
           Padding(
             padding: const EdgeInsets.only(
               left: 20,
@@ -167,14 +184,22 @@ class _LoginPageState extends State<LoginPage> {
                     color: HexColor("#3B3836"),
                   ),
                   focusedBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    borderSide:
-                        BorderSide(color: HexColor("#B5140E"), width: 2.0),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    borderSide: BorderSide(
+                      color: HexColor("#B5140E"),
+                      width: 2.0,
+                    ),
                   ),
                   enabledBorder: OutlineInputBorder(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    borderSide:
-                        BorderSide(color: HexColor("#f3f3f4"), width: 2.0),
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                    borderSide: BorderSide(
+                      color: HexColor("#f3f3f4"),
+                      width: 2.0,
+                    ),
                   ),
                 ),
               )),
@@ -189,10 +214,12 @@ class _LoginPageState extends State<LoginPage> {
               height: 50,
               child: TextButton(
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(HexColor("#B5140E"))),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(HexColor("#B5140E")),
+                ),
                 onPressed: () {
                   if (loginFormKey.currentState!.validate()) {
+                    /// shows the progress indicator
                     final progress = ProgressHUD.of(context);
                     progress?.show();
 
@@ -202,6 +229,7 @@ class _LoginPageState extends State<LoginPage> {
                     );
 
                     APIService.login(model).then((response) {
+                      /// hides the progress indicator
                       progress?.dismiss();
 
                       if (response == "") {
@@ -234,31 +262,35 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: Text(
                   "Sign in",
-                  style: TextStyle(color: HexColor("#FEFEFE")),
+                  style: TextStyle(
+                    color: HexColor("#FEFEFE"),
+                  ),
                 ),
               ),
             ),
           ),
-          Text.rich(
-            TextSpan(
-                text: "Do not have an account yet? ",
-                style: TextStyle(
-                  color: HexColor("#3B3836"),
-                ),
-                children: <InlineSpan>[
-                  TextSpan(
-                      text: 'Register now',
-                      style: TextStyle(
-                          color: HexColor("#B5140E"),
-                          fontWeight: FontWeight.bold),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          Navigator.pushNamed(context, "/register");
-                        })
-                ]),
-          )
         ],
       ),
+    );
+  }
+
+  Widget _registerLink() {
+    return Text.rich(
+      TextSpan(
+          text: "Do not have an account yet? ",
+          style: TextStyle(
+            color: HexColor("#3B3836"),
+          ),
+          children: <InlineSpan>[
+            TextSpan(
+                text: 'Register now',
+                style: TextStyle(
+                    color: HexColor("#B5140E"), fontWeight: FontWeight.bold),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.pushNamed(context, "/register");
+                  })
+          ]),
     );
   }
 }

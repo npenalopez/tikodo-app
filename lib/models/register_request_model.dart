@@ -1,3 +1,13 @@
+/// A model that represents the register request body.
+/// ```json
+/// {
+/// "email": "user@example.com",
+/// "password": "string",
+/// "password2": "string",
+/// "first_name": "string",
+/// "last_name": "string"
+/// }
+/// ```
 class RegisterRequestModel {
   RegisterRequestModel({
     required this.email,
@@ -6,6 +16,7 @@ class RegisterRequestModel {
     required this.firstName,
     required this.lastName,
   });
+
   late final String email;
   late final String password;
   late final String password2;

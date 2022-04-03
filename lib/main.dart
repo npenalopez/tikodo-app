@@ -8,6 +8,7 @@ import 'package:tikodo_app/services/shared_service.dart';
 Widget defaultRoute = const LoginPage();
 
 void main() async {
+  /// dynamically set the default route
   WidgetsFlutterBinding.ensureInitialized();
   bool result = await SharedService.isLoggedIn();
   if (result) {

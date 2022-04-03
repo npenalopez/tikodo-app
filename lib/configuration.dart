@@ -1,3 +1,4 @@
+/// Constants for the configuration of the application.
 class Config {
   static const String appName = "TikoDo App";
   static const String apiURL = r'https://rocky-earth-59000.herokuapp.com/api';

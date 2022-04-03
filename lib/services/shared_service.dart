@@ -5,7 +5,9 @@ import 'package:api_cache_manager/utils/cache_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:tikodo_app/models/login_response_model.dart';
 
+/// A service that provides shared methods.
 class SharedService {
+  /// A method that check if login details are stored in the cache.
   static Future<bool> isLoggedIn() async {
     var isKeyExist =
         await APICacheManager().isAPICacheKeyExist("login_details");
@@ -13,6 +15,7 @@ class SharedService {
     return isKeyExist;
   }
 
+  /// A method that get login details from cache.
   static Future<LoginResponseModel?> loginDetails() async {
     var isKeyExist =
         await APICacheManager().isAPICacheKeyExist("login_details");
@@ -25,6 +28,7 @@ class SharedService {
     return null;
   }
 
+  /// A method that stores login details in the cache.
   static Future<void> setLoginDetails(
     LoginResponseModel model,
   ) async {
@@ -33,6 +37,8 @@ class SharedService {
     await APICacheManager().addCacheData(cacheDBModel);
   }
 
+  /// A method that removes login details from the cache and sends the user
+  /// to the login screen.
   static Future<void> logout(BuildContext context) async {
     final navigator = Navigator.pushNamedAndRemoveUntil(
       context,

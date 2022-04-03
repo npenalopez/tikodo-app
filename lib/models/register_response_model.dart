@@ -3,6 +3,14 @@ import 'dart:convert';
 RegisterResponseModel registerResponseModel(String str) =>
     RegisterResponseModel.fromJson(json.decode(str));
 
+/// A model that represents the response of a register request.
+/// ```json
+/// {
+/// "email": "user@example.com",
+/// "first_name": "string",
+/// "last_name": "string"
+/// }
+/// ```
 class RegisterResponseModel {
   RegisterResponseModel({
     required this.email,

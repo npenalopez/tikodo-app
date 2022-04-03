@@ -1,8 +1,16 @@
+/// A model that represents the login request body.
+/// ```json
+/// {
+/// "email": "string",
+/// "password": "string"
+/// }
+/// ```
 class LoginRequestModel {
   LoginRequestModel({
     required this.email,
     required this.password,
   });
+
   late final String email;
   late final String password;
 

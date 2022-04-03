@@ -10,9 +10,11 @@ import 'package:tikodo_app/models/register_response_model.dart';
 import 'package:tikodo_app/models/todo_model.dart';
 import 'package:tikodo_app/services/shared_service.dart';
 
+/// A service that provides methods to communicate with the API.
 class APIService {
   static var client = http.Client();
 
+  /// A method that sends a login request to the API.
   static Future<String> login(LoginRequestModel model) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
@@ -34,6 +36,7 @@ class APIService {
     }
   }
 
+  /// A method that registers a new user.
   static Future<dynamic> register(RegisterRequestModel model) async {
     Map<String, String> requestHeaders = {
       'Content-Type': 'application/json',
@@ -55,6 +58,7 @@ class APIService {
     return registerResponseModel(response.body);
   }
 
+  /// A method that gets all todos.
   static Future<List<Todo>> getTodos() async {
     if (await verifyToken() == false) {
       refreshToken();
@@ -83,6 +87,7 @@ class APIService {
     }
   }
 
+  /// A method that creates a new todo.
   static Future<String> addTodo(String description) async {
     if (await verifyToken() == false) {
       refreshToken();
@@ -103,13 +108,10 @@ class APIService {
         'description': description,
       }),
     );
-
-    if (response.statusCode.toString() == "400") {
-      return response.body.toString();
-    }
-    return "Todo successfully created!";
+    return response.reasonPhrase.toString();
   }
 
+  /// A method that updates a todo.
   static Future<String> updateTodo(Todo todo) async {
     if (await verifyToken() == false) {
       refreshToken();
@@ -129,13 +131,11 @@ class APIService {
           'description': todo.description,
           'done': !todo.done,
         }));
-    if (response.statusCode.toString() == "400") {
-      return "Todo not updated:/";
-    }
 
-    return "Todo updated successfully";
+    return response.reasonPhrase.toString();
   }
 
+  /// A method that deletes a todo.
   static Future<String> deleteTodo(int identifier) async {
     if (await verifyToken() == false) {
       refreshToken();
@@ -154,12 +154,10 @@ class APIService {
       headers: requestHeaders,
     );
 
-    if (response.statusCode.toString() == "400") {
-      return "Todo not deleted :/";
-    }
-    return "Todo deleted successfully";
+    return response.reasonPhrase.toString();
   }
 
+  /// A method that verifies the token validity.
   static Future<bool> verifyToken() async {
     var loginDetails = await SharedService.loginDetails();
     if (loginDetails == null) {
@@ -185,6 +183,7 @@ class APIService {
     return true;
   }
 
+  /// A method that refreshes the token.
   static Future<void> refreshToken() async {
     var loginDetails = await SharedService.loginDetails();
     if (loginDetails == null) {
