@@ -46,11 +46,15 @@ class _TikoDoPageState extends State<TikoDoPage> {
         backgroundColor: HexColor("#FEFEFE"),
         elevation: 0,
         actions: [
-          _logoutAction(context),
+          Builder(
+            builder: (context) => _logoutAction(context),
+          ),
         ],
       ),
       body: _todoList(),
-      floatingActionButton: _addTodoButton(context),
+      floatingActionButton: Builder(
+        builder: (context) => _addTodoButton(context),
+      ),
     );
   }
 
@@ -76,7 +80,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return _addTodoPopup();
+              return _addTodoPopup(context);
             });
       },
       backgroundColor: HexColor("#B5140E"),
@@ -321,7 +325,7 @@ class _TikoDoPageState extends State<TikoDoPage> {
     );
   }
 
-  Widget _addTodoPopup() {
+  Widget _addTodoPopup(BuildContext context) {
     return SimpleDialog(
       contentPadding: const EdgeInsets.symmetric(
         horizontal: 25,

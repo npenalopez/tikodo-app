@@ -43,7 +43,9 @@ class _LoginPageState extends State<LoginPage> {
         children: [
           _loginImage(),
           _welcomeMessage(),
-          _loginForm(),
+          Builder(
+            builder: (context) => _loginForm(context),
+          ),
           _registerLink(),
         ],
       ),
@@ -94,7 +96,7 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _loginForm() {
+  Widget _loginForm(BuildContext context) {
     return Form(
       key: loginFormKey,
       child: Column(

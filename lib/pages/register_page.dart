@@ -33,9 +33,10 @@ class _RegisterPageState extends State<RegisterPage> {
       resizeToAvoidBottomInset: false,
       backgroundColor: HexColor("#FEFEFE"),
       body: ProgressHUD(
-          child: Builder(
-        builder: (context) => _registerUI(context),
-      )),
+        child: Builder(
+          builder: (context) => _registerUI(context),
+        ),
+      ),
     );
   }
 
@@ -50,7 +51,9 @@ class _RegisterPageState extends State<RegisterPage> {
         const SizedBox(
           height: 30,
         ),
-        _registerForm(),
+        Builder(
+          builder: (context) => _registerForm(context),
+        ),
       ],
     ));
   }
@@ -89,7 +92,7 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
-  Widget _registerForm() {
+  Widget _registerForm(BuildContext context) {
     return Form(
       key: registerFormKey,
       child: Column(
